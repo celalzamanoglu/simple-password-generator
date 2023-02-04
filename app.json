@@ -14,9 +14,7 @@
     "updates": {
       "fallbackToCacheTimeout": 0
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.simple.pwg"
@@ -31,5 +29,9 @@
     "web": {
       "favicon": "./assets/favicon.png"
     }
+  },
+  "react-native-google-mobile-ads": {
+    "android_app_id": "ca-app-pub-4615432502114571~4365729180",
+    "ios_app_id": "ca-app-pub-4615432502114571~1919243833"
   }
 }

@@ -1,87 +1,52 @@
 import { useState } from "react";
-import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import characters from "./assets/chars";
+import { styles } from "./assets/styles";
 import { StatusBar } from "expo-status-bar";
-import { Slider } from "@miblanchard/react-native-slider";
-import { getStatusBarHeight } from "react-native-safearea-height";
-import { MaterialIcons } from "@expo/vector-icons";
-import BouncyCheckbox from "react-native-bouncy-checkbox";
 import { Octicons } from "@expo/vector-icons";
+import { MaterialIcons } from "@expo/vector-icons";
+import { Slider } from "@miblanchard/react-native-slider";
+import BouncyCheckbox from "react-native-bouncy-checkbox";
+import Clipboard from "@react-native-clipboard/clipboard";
+import { Platform, Text, TouchableOpacity, View } from "react-native";
+import { BannerAd, BannerAdSize, TestIds } from "react-native-google-mobile-ads";
 
 export default function App() {
   const [length, setLength] = useState(8);
   const [useSymbols, setUseSymbols] = useState(false);
   const [password, setPassword] = useState("Click on Generate button");
 
-  const letters = [
-    "A",
-    "B",
-    "C",
-    "D",
-    "E",
-    "F",
-    "G",
-    "H",
-    "I",
-    "J",
-    "K",
-    "L",
-    "M",
-    "N",
-    "O",
-    "P",
-    "Q",
-    "R",
-    "S",
-    "T",
-    "U",
-    "V",
-    "W",
-    "X",
-    "Y",
-    "Z",
-    "a",
-    "b",
-    "c",
-    "d",
-    "e",
-    "f",
-    "g",
-    "h",
-    "i",
-    "j",
-    "k",
-    "l",
-    "m",
-    "n",
-    "o",
-    "p",
-    "q",
-    "r",
-    "s",
-    "t",
-    "u",
-    "v",
-    "w",
-    "x",
-    "y",
-    "z",
-  ];
-  const numbers = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"];
-  const symbols = ["!", "@", "#", "$", "%", "&", "*", "_", "-", ".", "?"];
+  const adUnitId =
+    Platform.OS === "ios" ? "ca-app-pub-4615432502114571~1919243833" : "ca-app-pub-4615432502114571~4365729180";
+
+  const getRandomNumber = (n: number): number => Math.floor(Math.random() * n);
+  const copyToClipboard = (password: string) => Clipboard.setString(password);
 
   const generatePassword = () => {
     let pw: string = "";
+    let n: number;
+
+    let includesSymbol: boolean = false;
+    let includesNumber: boolean = false;
+    let includesLetter: boolean = false;
+
     for (let i = 0; i < length; i++) {
-      const coinFlip = Math.floor(Math.random() * 3);
-      if (coinFlip === 1) {
-        pw += letters[Math.floor(Math.random() * letters.length)];
-      } else if (coinFlip === 2 && useSymbols) {
-        pw += symbols[Math.floor(Math.random() * symbols.length)];
+      n = getRandomNumber(8);
+      if (n === 1 && !characters.symbols.includes(pw.charAt(i - 1)) && i > 2 && useSymbols) {
+        pw += characters.symbols[getRandomNumber(characters.symbols.length)];
+        includesSymbol = true;
+      } else if ((n === 3 || n === 4) && i > 0) {
+        pw += characters.numbers[getRandomNumber(characters.numbers.length)];
+        includesNumber = true;
       } else {
-        pw += numbers[Math.floor(Math.random() * numbers.length)];
+        pw += characters.letters[getRandomNumber(characters.letters.length)];
+        includesLetter = true;
       }
     }
-    setPassword(pw);
+
+    (useSymbols && includesSymbol && includesLetter && includesNumber) ||
+    (!useSymbols && !includesSymbol && includesLetter && includesNumber)
+      ? setPassword(pw)
+      : generatePassword();
   };
 
   return (
@@ -89,7 +54,7 @@ export default function App() {
       <View style={styles.header}>
         <MaterialIcons name="lock" size={120} color="black" style={styles.lockIcon} />
         <View style={styles.titleWrapper}>
-          <Text style={styles.title}>Simple</Text>
+          <Text style={styles.brandName}>Simple</Text>
           <Text style={styles.title}>Password Generator</Text>
         </View>
       </View>
@@ -122,100 +87,21 @@ export default function App() {
           <Text style={styles.generateTxt}>Generate</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity style={styles.passwordBtn}>
+        <TouchableOpacity style={styles.passwordBtn} onPress={() => copyToClipboard(password)}>
           <Text style={styles.passwordTxt}>{password}</Text>
           <Octicons name="copy" size={14} color="black" style={styles.copyIcon} />
         </TouchableOpacity>
+
+        <BannerAd
+          unitId={TestIds.BANNER}
+          size={"300x50"}
+          requestOptions={{
+            requestNonPersonalizedAdsOnly: true,
+          }}
+        />
 
         <StatusBar style="auto" />
       </View>
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#faf0e6",
-    alignItems: "center",
-
-    padding: 5,
-    paddingTop: getStatusBarHeight(),
-  },
-  header: {
-    justifyContent: "center",
-    alignItems: "center",
-    marginTop: 80,
-    marginBottom: 40,
-  },
-  lockIcon: {
-    margin: 20,
-  },
-  titleWrapper: {
-    alignItems: "center",
-    marginBottom: 30,
-  },
-  title: {
-    fontSize: 32,
-    fontWeight: "500",
-
-    marginBottom: 5,
-  },
-  content: {
-    flex: 1,
-    backgroundColor: "#faf0e6",
-    alignItems: "center",
-  },
-  len: {
-    fontSize: 20,
-  },
-  slider: {
-    width: 220,
-  },
-  checkBoxContainer: {
-    flexDirection: "row",
-    alignItems: "center",
-
-    marginBottom: 20,
-  },
-  checkBoxContainerTxt: {
-    fontSize: 20,
-  },
-  generateBtn: {
-    width: 300,
-    alignItems: "center",
-
-    borderWidth: 0.5,
-    borderRadius: 10,
-
-    backgroundColor: "black",
-  },
-  generateTxt: {
-    fontSize: 22,
-
-    padding: 5,
-
-    color: "white",
-  },
-  passwordBtn: {
-    width: 300,
-    flexDirection: "row",
-    justifyContent: "center",
-
-    borderWidth: 0.5,
-    borderRadius: 5,
-
-    paddingVertical: 5,
-    paddingLeft: 5,
-    paddingRight: -10,
-    marginTop: 20,
-
-    backgroundColor: "#faebd7",
-  },
-  passwordTxt: {
-    fontSize: 20,
-    fontWeight: "bold",
-    marginRight: 10,
-  },
-  copyIcon: {},
-});
