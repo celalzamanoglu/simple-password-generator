@@ -17,6 +17,8 @@ export const styles = StyleSheet.create({
     height: hp(45),
     paddingTop: 0,
 
+    marginBottom: hp(5),
+
     // backgroundColor: "blue",
   },
   image: {
@@ -49,7 +51,7 @@ export const styles = StyleSheet.create({
     fontSize: 20,
   },
   slider: {
-    width: 220,
+    width: wp(50),
   },
   checkBoxContainer: {
     flexDirection: "row",
@@ -62,7 +64,7 @@ export const styles = StyleSheet.create({
     color: CONSTANTS.colors.black,
   },
   generateBtn: {
-    width: 300,
+    width: wp(80),
     alignItems: "center",
 
     borderWidth: 0.5,
@@ -79,7 +81,7 @@ export const styles = StyleSheet.create({
     color: "white",
   },
   passwordBtn: {
-    width: 300,
+    width: wp(80),
     flexDirection: "row",
     justifyContent: "center",
 

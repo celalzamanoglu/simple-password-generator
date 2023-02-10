@@ -29,7 +29,8 @@ export default function App() {
   const adUnitId = Platform.OS === "ios" ? CONSTANTS.AdMob.IosID : CONSTANTS.AdMob.AndroidID;
 
   // AsyncStorage adjustments to follow "Generate" button press count
-  // gCountNum % 5 === 0  ? show Interstitial Ad
+  // for __DEV__ gCountNum % 5 === 0  ? show Interstitial Ad
+  // for production gCountNum % 10 === 0  ? show Interstitial Ad
   const adjustGenerateCount = async () => {
     const gCount = await AsyncStorage.getItem("G_COUNTER");
     if (gCount === null) {
@@ -113,7 +114,7 @@ export default function App() {
           source={require("./assets/lottiesplash.json")}
           autoPlay
           loop={false}
-          speed={1.6}
+          speed={1.5}
           onAnimationFinish={() => setShowSplash(!showSplash)}
         />
       </View>
