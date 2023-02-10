@@ -1,45 +1,49 @@
 import { StyleSheet } from "react-native";
 import { getStatusBarHeight } from "react-native-safearea-height";
+import CONSTANTS from "./constants";
+import { widthPercentageToDP as wp, heightPercentageToDP as hp } from "react-native-responsive-screen";
 
 export const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#faf0e6",
-    alignItems: "center",
+    backgroundColor: CONSTANTS.colors.primary,
 
-    padding: 5,
-    paddingTop: getStatusBarHeight(),
+    paddingVertical: getStatusBarHeight(),
   },
   header: {
     justifyContent: "center",
     alignItems: "center",
-    marginTop: 80,
-    marginBottom: 40,
+
+    height: hp(45),
+    paddingTop: 0,
+
+    // backgroundColor: "blue",
   },
-  lockIcon: {
-    margin: 20,
+  image: {
+    marginVertical: hp(2.5),
+    height: hp(20),
+    width: wp(65),
   },
   titleWrapper: {
     alignItems: "center",
-    marginBottom: 30,
+
+    // backgroundColor: "red",
   },
   brandName: {
     fontSize: 32,
-    fontWeight: "500",
-    fontStyle: "italic",
-
-    marginBottom: 5,
+    fontWeight: "bold",
   },
   title: {
     fontSize: 32,
-    fontWeight: "500",
+    fontWeight: "bold",
 
-    marginBottom: 5,
+    // backgroundColor: "green",
   },
   content: {
     flex: 1,
-    backgroundColor: "#faf0e6",
     alignItems: "center",
+
+    // backgroundColor: "red",
   },
   len: {
     fontSize: 20,
@@ -55,6 +59,7 @@ export const styles = StyleSheet.create({
   },
   checkBoxContainerTxt: {
     fontSize: 20,
+    color: CONSTANTS.colors.black,
   },
   generateBtn: {
     width: 300,
@@ -63,10 +68,11 @@ export const styles = StyleSheet.create({
     borderWidth: 0.5,
     borderRadius: 10,
 
-    backgroundColor: "black",
+    backgroundColor: CONSTANTS.colors.black,
   },
   generateTxt: {
     fontSize: 22,
+    fontWeight: "500",
 
     padding: 5,
 
@@ -88,12 +94,15 @@ export const styles = StyleSheet.create({
     marginTop: 20,
     marginBottom: 150,
 
-    backgroundColor: "#faebd7",
+    backgroundColor: CONSTANTS.colors.secondary,
   },
   passwordTxt: {
     fontSize: 20,
     fontWeight: "bold",
-    marginRight: 10,
+    marginRight: wp(2),
   },
-  copyIcon: {},
+  splash: {
+    flex: 1,
+    backgroundColor: CONSTANTS.colors.primary,
+  },
 });
