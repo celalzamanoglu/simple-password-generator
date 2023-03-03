@@ -15,9 +15,6 @@ export const styles = StyleSheet.create({
     alignItems: "center",
 
     height: hp(45),
-    paddingTop: 0,
-
-    marginBottom: hp(5),
 
     // backgroundColor: "blue",
   },
@@ -34,10 +31,12 @@ export const styles = StyleSheet.create({
   brandName: {
     fontSize: 32,
     fontWeight: "bold",
+    letterSpacing: 0.7,
   },
   title: {
     fontSize: 32,
     fontWeight: "bold",
+    letterSpacing: 0.7,
 
     // backgroundColor: "green",
   },
@@ -49,6 +48,7 @@ export const styles = StyleSheet.create({
   },
   len: {
     fontSize: 20,
+    letterSpacing: 0.2,
   },
   slider: {
     width: wp(50),
@@ -62,6 +62,7 @@ export const styles = StyleSheet.create({
   checkBoxContainerTxt: {
     fontSize: 20,
     color: CONSTANTS.colors.black,
+    letterSpacing: 0.1,
   },
   generateBtn: {
     width: wp(80),
@@ -79,6 +80,7 @@ export const styles = StyleSheet.create({
     padding: 5,
 
     color: "white",
+    letterSpacing: 0.4,
   },
   passwordBtn: {
     width: wp(80),
@@ -102,9 +104,20 @@ export const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: "bold",
     marginRight: wp(2),
+    letterSpacing: 0.2,
   },
   splash: {
     flex: 1,
     backgroundColor: CONSTANTS.colors.primary,
   },
+  copiedMsg: {
+    width: wp(20),
+    paddingVertical: 5,
+    paddingHorizontal: 6,
+    justifyContent: "center",
+    alignItems: "center",
+    borderRadius: 8,
+    backgroundColor: CONSTANTS.colors.black,
+  },
+  copiedTxt: { fontSize: 18, fontWeight: "bold", color: "gainsboro", letterSpacing: 0.7 },
 });

@@ -1,29 +1,33 @@
-import { useEffect, useState } from "react";
+import React from "react";
 import characters from "./assets/chars";
+import Lottie from "lottie-react-native";
 import { styles } from "./assets/styles";
+import CONSTANTS from "./assets/constants";
 import { StatusBar } from "expo-status-bar";
 import { Octicons } from "@expo/vector-icons";
-import { MaterialIcons } from "@expo/vector-icons";
+import { Easing, timing } from "react-native-reanimated";
+import { MotiPressable } from "moti/interactions";
 import { Slider } from "@miblanchard/react-native-slider";
 import BouncyCheckbox from "react-native-bouncy-checkbox";
 import Clipboard from "@react-native-clipboard/clipboard";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Platform, Text, TouchableOpacity, View, Image } from "react-native";
 import { TestIds, InterstitialAd, AdEventType } from "react-native-google-mobile-ads";
-import CONSTANTS from "./assets/constants";
 import { Tooltip } from "react-native-paper";
-import Lottie from "lottie-react-native";
+import { MotiView } from "moti";
+import { heightPercentageToDP as hp } from "react-native-responsive-screen";
 
 export default function App() {
-  const [length, setLength] = useState(8);
-  const [useSymbols, setUseSymbols] = useState(false);
-  const [password, setPassword] = useState("Click on Generate button");
-  const [enableAd, setEnableAd] = useState(false);
-  const [showSplash, setShowSplash] = useState(true);
+  const [enableAd, setEnableAd] = React.useState(false);
+  const [length, setLength] = React.useState(8);
+  const [password, setPassword] = React.useState("Click on Generate button");
+  const [showSplash, setShowSplash] = React.useState(true);
+  const [useSymbols, setUseSymbols] = React.useState(false);
+  const [copied, setCopied] = React.useState(false);
 
   // Utilization functions
-  const getRandomNumber = (n: number): number => Math.floor(Math.random() * n);
   const copyToClipboard = (password: string) => Clipboard.setString(password);
+  const getRandomNumber = (n: number): number => Math.floor(Math.random() * n);
 
   // Google AdMob configurations
   const adUnitId = Platform.OS === "ios" ? CONSTANTS.AdMob.IosID : CONSTANTS.AdMob.AndroidID;
@@ -52,7 +56,7 @@ export default function App() {
   // Load Ad on render and every generate button press
   // Disabled untill AdMob approves the app
   /*
-  useEffect(() => {
+  React.useEffect(() => {
     if (enableAd) {
       // Safety timeout for quick presses
       setTimeout(() => {}, 2000);
@@ -77,12 +81,12 @@ export default function App() {
   */
 
   const generatePassword = () => {
-    let pw: string = "";
     let n: number;
+    let pw: string = "";
 
-    let includesSymbol: boolean = false;
-    let includesNumber: boolean = false;
     let includesLetter: boolean = false;
+    let includesNumber: boolean = false;
+    let includesSymbol: boolean = false;
 
     for (let i = 0; i < length; i++) {
       n = getRandomNumber(8);
@@ -154,16 +158,56 @@ export default function App() {
             />
           </View>
 
-          <TouchableOpacity style={styles.generateBtn} onPress={generatePassword}>
+          <MotiPressable
+            from={{ rotate: "-0.5deg" }}
+            animate={({ hovered, pressed }) => {
+              "worklet";
+
+              return {
+                rotate: hovered || pressed ? "0.5deg" : "0deg",
+              };
+            }}
+            transition={{
+              type: "timing",
+              duration: 50,
+              easing: Easing.out(Easing.ease),
+              repeat: 5,
+            }}
+            style={styles.generateBtn}
+            onPress={generatePassword}
+          >
             <Text style={styles.generateTxt}>Generate</Text>
+          </MotiPressable>
+
+          <TouchableOpacity
+            style={styles.passwordBtn}
+            onPress={() => {
+              setCopied(false);
+              copyToClipboard(password);
+              setCopied(true);
+              setTimeout(() => {
+                setCopied(false);
+              }, 1500);
+            }}
+          >
+            <Text style={styles.passwordTxt}>{password}</Text>
+            <Octicons name="copy" size={14} color="black" />
           </TouchableOpacity>
 
-          <Tooltip title="Copied!">
-            <TouchableOpacity style={styles.passwordBtn} onPress={() => copyToClipboard(password)}>
-              <Text style={styles.passwordTxt}>{password}</Text>
-              <Octicons name="copy" size={14} color="black" />
-            </TouchableOpacity>
-          </Tooltip>
+          {copied && (
+            <MotiView
+              from={{ opacity: 0.75 }}
+              animate={{ opacity: 0 }}
+              transition={{
+                type: "timing",
+                duration: 1500,
+                easing: Easing.out(Easing.ease),
+              }}
+              style={styles.copiedMsg}
+            >
+              <Text style={styles.copiedTxt}>Copied!</Text>
+            </MotiView>
+          )}
 
           <StatusBar style="auto" />
         </View>
