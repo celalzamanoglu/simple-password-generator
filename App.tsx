@@ -1,40 +1,48 @@
 import React from "react";
+import Animated from "react-native-reanimated";
+import { MotiView } from "moti";
 import characters from "./assets/chars";
-import Lottie from "lottie-react-native";
+import LottieView from "lottie-react-native";
 import { styles } from "./assets/styles";
 import CONSTANTS from "./assets/constants";
 import { StatusBar } from "expo-status-bar";
 import { Octicons } from "@expo/vector-icons";
-import { Easing, timing } from "react-native-reanimated";
-import { MotiPressable } from "moti/interactions";
+import { AntDesign } from "@expo/vector-icons";
+import { Easing } from "react-native-reanimated";
 import { Slider } from "@miblanchard/react-native-slider";
 import BouncyCheckbox from "react-native-bouncy-checkbox";
 import Clipboard from "@react-native-clipboard/clipboard";
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import { Platform, Text, TouchableOpacity, View, Image } from "react-native";
-import { TestIds, InterstitialAd, AdEventType } from "react-native-google-mobile-ads";
-import { Tooltip } from "react-native-paper";
-import { MotiView } from "moti";
-import { heightPercentageToDP as hp } from "react-native-responsive-screen";
+// import AsyncStorage from "@react-native-async-storage/async-storage";
+import { Platform, Text, TouchableOpacity, View, Image, Pressable } from "react-native";
+// import mobileAds, {
+//   AdsConsent,
+//   AdsConsentStatus,
+//   TestIds,
+//   InterstitialAd,
+//   AdEventType,
+//   MaxAdContentRating,
+// } from "react-native-google-mobile-ads";
+// import { check, request, PERMISSIONS, RESULTS } from "react-native-permissions";
 
 export default function App() {
   const [enableAd, setEnableAd] = React.useState(false);
   const [length, setLength] = React.useState(8);
   const [password, setPassword] = React.useState("Click on Generate button");
   const [showSplash, setShowSplash] = React.useState(true);
-  const [useSymbols, setUseSymbols] = React.useState(false);
+  const [answered, setAnswered] = React.useState(true); // set to true for no ads, should
+  const [useSymbols, setUseSymbols] = React.useState(true);
   const [copied, setCopied] = React.useState(false);
+  const [restartAnimation, setRestartAnimation] = React.useState(1);
 
   // Utilization functions
   const copyToClipboard = (password: string) => Clipboard.setString(password);
   const getRandomNumber = (n: number): number => Math.floor(Math.random() * n);
 
   // Google AdMob configurations
+  /*
   const adUnitId = Platform.OS === "ios" ? CONSTANTS.AdMob.IosID : CONSTANTS.AdMob.AndroidID;
 
-  // AsyncStorage adjustments to follow "Generate" button press count
-  // for __DEV__ gCountNum % 5 === 0  ? show Interstitial Ad
-  // for production gCountNum % 10 === 0  ? show Interstitial Ad
+  AsyncStorage adjustments to follow "Generate" button press count
   const adjustGenerateCount = async () => {
     const gCount = await AsyncStorage.getItem("G_COUNTER");
     if (gCount === null) {
@@ -53,10 +61,24 @@ export default function App() {
     }
   };
 
-  // Load Ad on render and every generate button press
-  // Disabled untill AdMob approves the app
-  /*
+  
   React.useEffect(() => {
+    // Ask for tracking permission
+    const getTrackingPermission = async () => {
+      const result = await check(PERMISSIONS.IOS.APP_TRACKING_TRANSPARENCY);
+      console.log("RESULT " + result);
+      if (result === RESULTS.DENIED) {
+        // The permission has not been requested, so request it.
+        await request(PERMISSIONS.IOS.APP_TRACKING_TRANSPARENCY);
+      }
+      setAnswered(true);
+      const adapterStatuses = await mobileAds().initialize();
+      console.log(adapterStatuses);
+    };
+
+    getTrackingPermission();
+
+    // Load Ad on render and every generate button press
     if (enableAd) {
       // Safety timeout for quick presses
       setTimeout(() => {}, 2000);
@@ -108,18 +130,25 @@ export default function App() {
       ? setPassword(pw)
       : generatePassword();
 
-    adjustGenerateCount();
+    // adjustGenerateCount();
   };
 
   if (showSplash) {
     return (
       <View style={styles.splash}>
-        <Lottie
+        <LottieView
           source={require("./assets/lottiesplash.json")}
           autoPlay
+          key={restartAnimation}
           loop={false}
           speed={1.5}
-          onAnimationFinish={() => setShowSplash(!showSplash)}
+          onAnimationFinish={() => {
+            if (answered) {
+              setShowSplash(false);
+            } else {
+              setRestartAnimation(getRandomNumber(1000));
+            }
+          }}
         />
       </View>
     );
@@ -135,7 +164,10 @@ export default function App() {
         </View>
 
         <View style={styles.content}>
-          <Text style={styles.len}>Length: {length}</Text>
+          <View style={styles.lenWrapper}>
+            <Text style={styles.len}>Length</Text>
+            <Text style={styles.lenNum}>{length}</Text>
+          </View>
 
           <Slider
             value={length}
@@ -147,7 +179,7 @@ export default function App() {
           />
 
           <View style={styles.checkBoxContainer}>
-            <Text style={styles.checkBoxContainerTxt}>Include special characters: </Text>
+            <Text style={styles.checkBoxContainerTxt}>Include special characters </Text>
             <BouncyCheckbox
               disableText
               fillColor="#000000"
@@ -158,26 +190,9 @@ export default function App() {
             />
           </View>
 
-          <MotiPressable
-            from={{ rotate: "-0.5deg" }}
-            animate={({ hovered, pressed }) => {
-              "worklet";
-
-              return {
-                rotate: hovered || pressed ? "0.5deg" : "0deg",
-              };
-            }}
-            transition={{
-              type: "timing",
-              duration: 50,
-              easing: Easing.out(Easing.ease),
-              repeat: 5,
-            }}
-            style={styles.generateBtn}
-            onPress={generatePassword}
-          >
+          <Pressable style={styles.generateBtn} onPress={generatePassword}>
             <Text style={styles.generateTxt}>Generate</Text>
-          </MotiPressable>
+          </Pressable>
 
           <TouchableOpacity
             style={styles.passwordBtn}
@@ -193,19 +208,19 @@ export default function App() {
             <Text style={styles.passwordTxt}>{password}</Text>
             <Octicons name="copy" size={14} color="black" />
           </TouchableOpacity>
-
           {copied && (
             <MotiView
-              from={{ opacity: 0.75 }}
+              from={{ opacity: 1 }}
               animate={{ opacity: 0 }}
               transition={{
                 type: "timing",
-                duration: 1500,
-                easing: Easing.out(Easing.ease),
+                duration: 2000,
+                easing: Easing.back(0.7),
               }}
               style={styles.copiedMsg}
             >
-              <Text style={styles.copiedTxt}>Copied!</Text>
+              <AntDesign name="checkcircleo" color={CONSTANTS.colors.secondary} size={22} />
+              <Text style={styles.copiedTxt}>Password copied to the clipboard!</Text>
             </MotiView>
           )}
 

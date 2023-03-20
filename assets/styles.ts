@@ -29,12 +29,12 @@ export const styles = StyleSheet.create({
     // backgroundColor: "red",
   },
   brandName: {
-    fontSize: 32,
+    fontSize: 33,
     fontWeight: "bold",
     letterSpacing: 0.7,
   },
   title: {
-    fontSize: 32,
+    fontSize: 33,
     fontWeight: "bold",
     letterSpacing: 0.7,
 
@@ -46,9 +46,17 @@ export const styles = StyleSheet.create({
 
     // backgroundColor: "red",
   },
+  lenWrapper: {
+    flexDirection: "row",
+  },
   len: {
-    fontSize: 20,
+    fontSize: 21,
     letterSpacing: 0.2,
+    marginRight: 5,
+  },
+  lenNum: {
+    fontSize: 21,
+    fontWeight: "700",
   },
   slider: {
     width: wp(50),
@@ -66,10 +74,13 @@ export const styles = StyleSheet.create({
   },
   generateBtn: {
     width: wp(80),
+
     alignItems: "center",
 
     borderWidth: 0.5,
-    borderRadius: 10,
+    borderRadius: 8,
+
+    padding: 8,
 
     backgroundColor: CONSTANTS.colors.black,
   },
@@ -77,10 +88,8 @@ export const styles = StyleSheet.create({
     fontSize: 22,
     fontWeight: "500",
 
-    padding: 5,
-
     color: "white",
-    letterSpacing: 0.4,
+    letterSpacing: 1,
   },
   passwordBtn: {
     width: wp(80),
@@ -91,8 +100,8 @@ export const styles = StyleSheet.create({
     borderStyle: "dashed",
     borderRadius: 1,
 
-    paddingVertical: 5,
-    paddingLeft: 5,
+    paddingVertical: 7,
+    paddingLeft: 7,
     paddingRight: -10,
 
     marginTop: 20,
@@ -101,7 +110,7 @@ export const styles = StyleSheet.create({
     backgroundColor: CONSTANTS.colors.secondary,
   },
   passwordTxt: {
-    fontSize: 20,
+    fontSize: 21,
     fontWeight: "bold",
     marginRight: wp(2),
     letterSpacing: 0.2,
@@ -111,13 +120,19 @@ export const styles = StyleSheet.create({
     backgroundColor: CONSTANTS.colors.primary,
   },
   copiedMsg: {
-    width: wp(20),
-    paddingVertical: 5,
-    paddingHorizontal: 6,
-    justifyContent: "center",
+    position: "absolute",
+    flexDirection: "row",
     alignItems: "center",
+    justifyContent: "center",
+
+    bottom: hp(1),
+    width: wp(80),
+
+    paddingHorizontal: wp(1.5),
+    paddingVertical: hp(2),
     borderRadius: 8,
-    backgroundColor: CONSTANTS.colors.black,
+
+    backgroundColor: "#323232",
   },
-  copiedTxt: { fontSize: 18, fontWeight: "bold", color: "gainsboro", letterSpacing: 0.7 },
+  copiedTxt: { fontSize: 16, color: "white", marginLeft: wp(1.5), letterSpacing: 0.27 },
 });

@@ -9,7 +9,6 @@
   },
   "dependencies": {
     "@miblanchard/react-native-slider": "^2.2.0",
-    "@react-native-async-storage/async-storage": "~1.17.3",
     "@react-native-clipboard/clipboard": "^1.11.1",
     "@types/react": "~18.0.24",
     "@types/react-native": "~0.70.6",
@@ -21,7 +20,6 @@
     "react": "18.1.0",
     "react-native": "0.70.5",
     "react-native-bouncy-checkbox": "^3.0.6",
-    "react-native-google-mobile-ads": "^9.1.1",
     "react-native-paper": "^5.2.0",
     "react-native-reanimated": "~2.12.0",
     "react-native-responsive-screen": "^1.4.2",
@@ -29,6 +27,9 @@
     "react-native-safearea-height": "^1.0.5",
     "typescript": "^4.6.3"
   },
+  "reactNativePermissionsIOS": [
+    "AppTrackingTransparency"
+  ],
   "devDependencies": {
     "@babel/core": "^7.12.9"
   },

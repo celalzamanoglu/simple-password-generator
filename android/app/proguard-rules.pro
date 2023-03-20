@@ -11,4 +11,7 @@
 -keep class com.swmansion.reanimated.** { *; }
 -keep class com.facebook.react.turbomodule.** { *; }
 
+# For Google adMob
+-keep class com.google.android.gms.internal.consent_sdk.** { *; }
+
 # Add any project specific keep options here:
