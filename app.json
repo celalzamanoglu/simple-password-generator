@@ -3,31 +3,11 @@
     "name": "Simple PWG",
     "slug": "simplepasswordgenerator",
     "version": "1.0.0",
-    "orientation": "portrait",
-    "icon": "./assets/icon.png",
-    "userInterfaceStyle": "light",
-    "splash": {
-      "image": "./assets/icon.png",
-      "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
-    },
-    "updates": {
-      "fallbackToCacheTimeout": 0
-    },
-    "assetBundlePatterns": ["**/*"],
-    "ios": {
-      "supportsTablet": true,
-      "bundleIdentifier": "com.simple.pwg"
-    },
-    "android": {
-      "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
-        "backgroundColor": "#FFFFFF"
-      },
-      "package": "com.simple.pwg"
-    },
-    "web": {
-      "favicon": "./assets/favicon.png"
+
+    "extra": {
+      "eas": {
+        "projectId": "7dbf2cbb-635f-4f9e-b116-3f02ad2a6a26"
+      }
     }
   }
 }

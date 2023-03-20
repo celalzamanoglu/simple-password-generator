@@ -1,5 +1,4 @@
 import React from "react";
-import Animated from "react-native-reanimated";
 import { MotiView } from "moti";
 import characters from "./assets/chars";
 import LottieView from "lottie-react-native";
