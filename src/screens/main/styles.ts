@@ -1,12 +1,35 @@
-import { StyleSheet } from "react-native";
-import { getStatusBarHeight } from "react-native-safearea-height";
-import CONSTANTS from "./constants";
-import { widthPercentageToDP as wp, heightPercentageToDP as hp } from "react-native-responsive-screen";
+import { StyleSheet, ViewStyle, TextStyle, ImageStyle } from "react-native";
+import { CONSTANTS as $c } from "../../utils/constants";
 
-export const styles = StyleSheet.create({
+import { widthPercentageToDP as wp, heightPercentageToDP as hp } from "react-native-responsive-screen";
+import { getStatusBarHeight } from "react-native-safearea-height";
+
+interface Styles {
+  container: ViewStyle;
+  header: ViewStyle;
+  image: ImageStyle;
+  titleWrapper: ViewStyle;
+  brandName: TextStyle;
+  title: TextStyle;
+  content: ViewStyle;
+  lenWrapper: ViewStyle;
+  len: TextStyle;
+  lenNum: TextStyle;
+  slider: ViewStyle;
+  checkboxContainer: ViewStyle;
+  checkboxContainerText: TextStyle;
+  generateButton: ViewStyle;
+  generateTxt: TextStyle;
+  passwordButton: ViewStyle;
+  passwordText: TextStyle;
+  copiedMsg: ViewStyle;
+  copiedText: TextStyle;
+}
+
+export default StyleSheet.create<Styles>({
   container: {
     flex: 1,
-    backgroundColor: CONSTANTS.colors.primary,
+    backgroundColor: $c.colors.primary,
 
     paddingVertical: getStatusBarHeight(),
   },
@@ -61,18 +84,18 @@ export const styles = StyleSheet.create({
   slider: {
     width: wp(50),
   },
-  checkBoxContainer: {
+  checkboxContainer: {
     flexDirection: "row",
     alignItems: "center",
 
     marginBottom: 20,
   },
-  checkBoxContainerTxt: {
+  checkboxContainerText: {
     fontSize: 20,
-    color: CONSTANTS.colors.black,
+    color: $c.colors.black,
     letterSpacing: 0.1,
   },
-  generateBtn: {
+  generateButton: {
     width: wp(80),
 
     alignItems: "center",
@@ -82,7 +105,7 @@ export const styles = StyleSheet.create({
 
     padding: 8,
 
-    backgroundColor: CONSTANTS.colors.black,
+    backgroundColor: $c.colors.black,
   },
   generateTxt: {
     fontSize: 22,
@@ -91,7 +114,7 @@ export const styles = StyleSheet.create({
     color: "white",
     letterSpacing: 1,
   },
-  passwordBtn: {
+  passwordButton: {
     width: wp(80),
     flexDirection: "row",
     justifyContent: "center",
@@ -107,17 +130,13 @@ export const styles = StyleSheet.create({
     marginTop: 20,
     marginBottom: 150,
 
-    backgroundColor: CONSTANTS.colors.secondary,
+    backgroundColor: $c.colors.secondary,
   },
-  passwordTxt: {
+  passwordText: {
     fontSize: 21,
     fontWeight: "bold",
     marginRight: wp(2),
     letterSpacing: 0.2,
-  },
-  splash: {
-    flex: 1,
-    backgroundColor: CONSTANTS.colors.primary,
   },
   copiedMsg: {
     position: "absolute",
@@ -134,5 +153,5 @@ export const styles = StyleSheet.create({
 
     backgroundColor: "#323232",
   },
-  copiedTxt: { fontSize: 16, color: "white", marginLeft: wp(1.5), letterSpacing: 0.27 },
+  copiedText: { fontSize: 16, color: "white", marginLeft: wp(1.5), letterSpacing: 0.27 },
 });

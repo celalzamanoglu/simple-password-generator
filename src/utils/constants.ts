@@ -9,5 +9,3 @@ export const CONSTANTS = {
     black: "#0e0e0e",
   },
 };
-
-export default CONSTANTS;

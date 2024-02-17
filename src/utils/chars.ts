@@ -1,4 +1,4 @@
-const characters = {
+export const characters = {
   letters: [
     "A",
     "B",
@@ -56,5 +56,3 @@ const characters = {
   numbers: ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"],
   symbols: ["!", "@", "#", "$", "%", "&", "*", "_", "-", ".", "?"],
 };
-
-export default characters;

@@ -3,11 +3,13 @@
     "name": "Simple PWG",
     "slug": "simplepasswordgenerator",
     "version": "1.0.0",
-
     "extra": {
       "eas": {
         "projectId": "7dbf2cbb-635f-4f9e-b116-3f02ad2a6a26"
       }
+    },
+    "ios": {
+      "bundleIdentifier": "com.simple.pwg"
     }
   }
 }
